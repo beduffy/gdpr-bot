@@ -2,7 +2,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 
 function respond(req, res, next) {
-  res.send('hello ' + req.params.name);
+  res.send('hello ');
   next();
 }
 
