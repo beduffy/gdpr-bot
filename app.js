@@ -1,6 +1,11 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 
+function respond(req, res, next) {
+  res.send('hello ' + req.params.name);
+  next();
+}
+
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
@@ -13,6 +18,8 @@ var connector = new builder.ChatConnector({
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
+server.get('/', respond);
+
 // Listen for messages from users 
 server.post('/api/messages', connector.listen());
 
@@ -20,3 +27,6 @@ server.post('/api/messages', connector.listen());
 var bot = new builder.UniversalBot(connector, function (session) {
     session.send("Satish said: %s", session.message.text);
 });
+
+
+
