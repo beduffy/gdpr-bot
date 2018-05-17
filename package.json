@@ -1,33 +1,22 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.3.0",
-  "description": "A sample Node.js app using Express 4",
-  "engines": {
-    "node": "8.9.1"
-  },
+  "name": "hpbot",
+  "version": "1.0.0",
+  "description": "testing micrsoft chatbot",
   "main": "app.js",
    "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start" : "node app.js"
   },
+  "keywords": [
+    "chatbot"
+  ],
+  "author": "harshit pandey",
+  "license": "MIT",
   "dependencies": {
-    "botbuilder": "^3.15.0",
-    "ejs": "^2.6.1",
-    "express": "^4.16.3",
-    "restify": "^7.2.0"
+    "botbuilder": "^3.9.0",
+    "restify": "^5.0.1"
   },
   "devDependencies": {
-    "request": "^2.81.0",
-    "tape": "^4.7.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
-  },
-  "keywords": [
-    "node",
-    "heroku",
-    "express"
-  ],
-  "license": "MIT"
+    "nodemon": "^1.11.0"
+  }
 }
