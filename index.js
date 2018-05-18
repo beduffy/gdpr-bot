@@ -1,5 +1,6 @@
 var restify = require('restify');
 var builder = require('botbuilder');
+var FuzzyMatching = require('fuzzy-matching');
 
 function respond(req, res, next) {
   res.send('hello ');
@@ -38,29 +39,34 @@ var bot = new builder.UniversalBot(connector, function (session) {
     Eigor: Yes, we have sample data. But in our system, it shows that you haven't got approval yet. Here is the link to get approval. You can come back to me after you get approved. Then we can send you link to download data.
     Ben: Will do. Thank you.
     */
+
+    var fm = new FuzzyMatching(["Hello", "Just checking, do we have data for employee's profiles?", "Got it, do we have data for employee holiday hours?", "Who is the owner of the US data?", "Can I get sample data?", "Can I get sample data?", "Will do. Thank you."]);
+    
+    fm_object = fm.get(session.message.text)
+    
      console.log(session.message.text)
-    if (session.message.text == 'Hello') {
+    if (fm_object['distance'] > 0.5 && fm_object['value'] == 'Hello') {
         session.send("Hey buddy. How can I help you today?");
     }
-    else if (session.message.text == 'Just checking, do we have data for employee\'s profiles?') {
+    else if (fm_object['distance'] > 0.5 && fm_object['value'] == "Just checking, do we have data for employee's profiles?") {
         session.send("Em, let me check the data lake …");
         setTimeout(function() {
             session.send("Yes, we have hr_profile for US and hr_employee_skills for UK. But it contains PII sensitive information that you can't use. You can find more information about this here about using anoymonized data.")
         }, 1000);
     }
-    else if (session.message.text == "Got it, do we have data for employee holiday hours?") {
+    else if (fm_object['distance'] > 0.5 && fm_object['value'] == "Got it, do we have data for employee holiday hours?") {
         session.send("Let me check the data lake …");
         setTimeout(function() {
             session.send("Yes, we have hr_employee_holiday_remain_hours data for UKI, but the GPDR policy is very restricted for using the Europe data.")
         }, 1000);
     }
-    else if (session.message.text == "Who is the owner of the US data?") {
+    else if (fm_object['distance'] > 0.5 && fm_object['value'] == "Who is the owner of the US data?") {
         session.send("The data owner is marissa.heather.");
     }
-    else if (session.message.text == "Can I get sample data?") {
+    else if (fm_object['distance'] > 0.5 && fm_object['value'] == "Can I get sample data?") {
         session.send("Yes, we have sample data. But in our system, it shows that you haven't got approval yet. Here is the link to get approval. You can come back to me after you get approved. Then we can send you link to download data.");
     }
-    else if (session.message.text == "Will do. Thank you.") {
+    else if (fm_object['distance'] > 0.5 && fm_object['value'] == "Will do. Thank you.") {
         session.send("No problem!");
     }
     else {
